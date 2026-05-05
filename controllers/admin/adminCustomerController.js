@@ -1,4 +1,5 @@
 const AdminCustomerService = require('../../services/admin/adminCustomerService');
+const { logSubAdminAction } = require("../../services/admin/adminSubAdminService");
 const { isAPIRequest } = require("../../utils/requestUtils");
 
 const CustomerController = {
@@ -57,6 +58,15 @@ const CustomerController = {
                     message: 'Customer not found'
                 });
             }
+
+            req.activityLoggedManually = true;
+            const customerName = customer.name || customer.email || req.params.id;
+            const statusText = status ? ` to ${status}` : '';
+            await logSubAdminAction(
+                req,
+                'UPDATE_CUSTOMER_STATUS',
+                `Updated customer ${customerName}${statusText}.`
+            );
 
             return res.status(200).json({
                 success: true,

@@ -10,6 +10,7 @@
     "start": "node app.js",
     "worker:analytics-simulation": "node scripts/workers/analyticsSimulationWorker.js",
     "simulate:phase2:once": "node scripts/run_phase2_simulation_once.js",
+    "seed:sub-admin-activity": "node scripts/seed_existing_sub_admin_activity.js",
     "init-data": "node initData.js",
     "build": "echo 'No build step required for backend'"
   },

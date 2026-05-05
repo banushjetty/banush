@@ -75,4 +75,16 @@ describe('Influencer Routes Integration', () => {
             expect(res.body).toHaveProperty('collabs');
         });
     });
+
+    describe('GET /influencer/campaign-history', () => {
+        it('should return campaign history for an authenticated influencer', async () => {
+            const res = await influencerAgent
+                .get('/influencer/campaign-history')
+                .set('Accept', 'application/json');
+
+            expect(res.status).toBe(200);
+            expect(res.body).toHaveProperty('success', true);
+            expect(Array.isArray(res.body.campaigns)).toBe(true);
+        });
+    });
 });

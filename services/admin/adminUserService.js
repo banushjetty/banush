@@ -116,10 +116,32 @@ class adminUserService {
         try {
             if (userType === 'influencer') {
                 const result = await InfluencerInfo.findByIdAndUpdate(id, { verified: true }, { new: true });
-                if (result) return { success: true, message: 'Influencer approved successfully' };
+                if (result) {
+                    return {
+                        success: true,
+                        message: 'Influencer approved successfully',
+                        userType: 'influencer',
+                        approvedUser: {
+                            id: result._id,
+                            name: result.displayName || result.fullName || result.email || 'Influencer',
+                            email: result.email
+                        }
+                    };
+                }
             } else if (userType === 'brand') {
                 const result = await BrandInfo.findByIdAndUpdate(id, { verified: true }, { new: true });
-                if (result) return { success: true, message: 'Brand approved successfully' };
+                if (result) {
+                    return {
+                        success: true,
+                        message: 'Brand approved successfully',
+                        userType: 'brand',
+                        approvedUser: {
+                            id: result._id,
+                            name: result.brandName || result.displayName || result.email || 'Brand',
+                            email: result.email
+                        }
+                    };
+                }
             }
             return { success: false, message: 'User not found or invalid userType' };
         } catch (error) {

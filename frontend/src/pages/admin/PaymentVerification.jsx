@@ -263,7 +263,7 @@ export default function PaymentVerification() {
 
     const updatePaymentStatus = async (transactionId, status, reason = null) => {
         try {
-            const response = await fetch(`${API_BASE_URL}/admin/payment_verification/update`, {
+            const response = await fetch(`${API_BASE_URL}/admin/payment_verification/update/${transactionId}`, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',

@@ -773,12 +773,14 @@ const CustomerController = require('../controllers/admin/adminCustomerController
 const NotificationController = require('../controllers/admin/adminNotificationController');
 const OrderAnalyticsController = require('../controllers/admin/adminOrderController');
 const AdminSearchController = require('../controllers/admin/adminSearchController');
+const AdminSubAdminController = require('../controllers/admin/adminSubAdminController');
 const { Admin } = require('../mongoDB');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 const { AdminSettingsController, isAPIRequest } = require('../controllers/admin/adminSettingsController');
 const { verifyJWTFromCookie: verifyUserJWT } = require('../controllers/auth/authController');
+const { trackSubAdminActivity } = require('../services/admin/adminSubAdminService');
 
 dotenv.config();
 
@@ -1020,6 +1022,7 @@ router.post('/feedback/submit', FeedbackController.submitFeedback);
 
 // Protected routes - require authentication
 router.use(adminAuth);
+router.use(trackSubAdminActivity);
 
 // Dashboard route
 router.get('/dashboard', DashboardController.getDashboard);
@@ -1072,6 +1075,7 @@ router.get('/collaboration_monitoring/:id', CollaborationController.getCollabora
 router.get('/payment_verification', PaymentController.getAllPayments);
 router.get('/payment_verification/categories', PaymentController.getInfluencerCategories);
 router.get('/payment_verification/:id', PaymentController.getPaymentDetails);
+router.post('/payment_verification/update', PaymentController.updatePaymentStatus);
 router.post('/payment_verification/update/:id', PaymentController.updatePaymentStatus);
 
 // Feedback routes
@@ -1094,6 +1098,10 @@ router.get('/orders/analytics', OrderAnalyticsController.getAdminOrderAnalytics)
 router.get('/orders/all', OrderAnalyticsController.getAdminAllOrders);
 
 router.get('/search', AdminSearchController.globalSearch);
+
+// Sub-Admin Management (superadmin only)
+router.get('/sub-admins/activity', AdminSubAdminController.getSubAdminActivity);
+router.get('/sub-admins', AdminSubAdminController.getSubAdminPanel);
 
 // Settings route
 // router.get('/settings', (req, res) => {

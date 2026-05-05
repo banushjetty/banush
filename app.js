@@ -1,4 +1,5 @@
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
@@ -14,7 +15,6 @@ const customerRoutes = require("./routes/customerRoutes");
 const subscriptionRoutes = require("./routes/subscriptionRoutes");
 const { router: authRouter, isAuthenticated, isBrand, isInfluencer } = require('./routes/authRoutes');
 const landingRoutes = require('./routes/landingRoutes');
-const path = require('path');
 const { connectDB } = require('./mongoDB');
 const ElasticsearchService = require('./services/search/elasticsearchService');
 
@@ -143,7 +143,7 @@ app.set('trust proxy', 1);
 
 // Session configuration
 app.use(session({
-    secret: process.env.SESSION_SECRET || 'your-secret-key',
+    secret: process.env.SESSION_SECRET || process.env.JWT_SECRET || 'your-secret-key',
     resave: false,
     saveUninitialized: false,
     cookie: {

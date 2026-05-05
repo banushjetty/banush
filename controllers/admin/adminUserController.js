@@ -1,4 +1,5 @@
 const AdminUserService = require("../../services/admin/adminUserService");
+const { logSubAdminAction } = require("../../services/admin/adminSubAdminService");
 const { isAPIRequest } = require("../../utils/requestUtils");
 
 const UserManagementController = {
@@ -26,6 +27,19 @@ const UserManagementController = {
             const { id } = req.params;
             const { userType } = req.body;
             const result = await AdminUserService.approveUser(id, userType);
+
+            if (result.success) {
+                req.activityLoggedManually = true;
+                const approvedType = result.userType || userType || 'user';
+                const approvedUser = result.approvedUser || {};
+                const approvedName = approvedUser.name || approvedUser.email || id;
+                await logSubAdminAction(
+                    req,
+                    'APPROVE_USER',
+                    `Approved ${approvedType} ${approvedName}.`
+                );
+            }
+
             res.json(result);
         } catch (error) {
             console.error("Error in approveUser:", error);

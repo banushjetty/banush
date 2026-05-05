@@ -6,6 +6,7 @@ import adminStyles from '../../styles/admin/admin_dashboard.module.css';
 import { API_BASE_URL } from '../../services/api';
 import { getAdminSocket, ADMIN_SOCKET_EVENTS } from '../../services/adminSocket';
 import AdminNavbar from '../../components/admin/AdminNavbar';
+import SubAdminPanel from '../../components/admin/SubAdminPanel';
 
 export default function Dashboard() {
     const [user, setUser] = useState({ name: 'Admin' });
@@ -486,6 +487,9 @@ export default function Dashboard() {
                         </Link>
                     </div>
                 </div>
+
+                {/* Sub-Admin Management — visible to superadmin only */}
+                <SubAdminPanel currentUserRole={user.role} />
             </div>
         </AdminNavbar>
     );

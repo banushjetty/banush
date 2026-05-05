@@ -1,6 +1,7 @@
 const AdminPaymentService = require("../../services/admin/adminPaymentService");
 const { isAPIRequest } = require("../../utils/requestUtils");
 const AdminRealtimeEmitter = require("../../services/admin/adminRealtimeEmitter");
+const { logSubAdminAction } = require("../../services/admin/adminSubAdminService");
 
 const PaymentController = {
     async getAllPayments(req, res) {
@@ -54,11 +55,31 @@ const PaymentController = {
 
     async updatePaymentStatus(req, res) {
         try {
-            const id = req.params.id;
+            const id = req.params.id || req.body.id;
             const { status } = req.body;
+
+            if (!id || !status) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Payment id and status are required'
+                });
+            }
+
             const result = await AdminPaymentService.updatePaymentStatus(id, status);
 
             if (result?.success) {
+                req.activityLoggedManually = true;
+                const payment = result.payment || {};
+                const parties = [payment.brand, payment.influencer].filter(Boolean).join(' / ');
+                const amount = payment.amount ? ` for ${payment.amount}` : '';
+                const context = parties ? ` (${parties})` : '';
+
+                await logSubAdminAction(
+                    req,
+                    'UPDATE_PAYMENT',
+                    `Updated payment ${id} to ${status}${amount}${context}.`
+                );
+
                 AdminRealtimeEmitter.emitRevenueUpdate({
                     source: 'admin_payment_status',
                     paymentId: id,

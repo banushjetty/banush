@@ -1,12 +1,13 @@
 const { CampaignInfluencers, CampaignMetrics } = require('../../models/CampaignMongo');
 const influencerProfileService = require('./influencerProfileService');
+const { getCampaignHistory: getInfluencerCampaignHistory } = require('./influencerMetricsService');
 const collaborationManageService = require('../collaboration/collaborationManageService');
 const notificationController = require('../../monolithic_files/notificationController');
 
 class InfluencerCampaignService {
     static async getCampaignHistory(influencerId) {
         // Fetch completed campaigns with metrics and influencers
-        const campaigns = await influencerProfileService.getCampaignHistory(influencerId);
+        const campaigns = await getInfluencerCampaignHistory(influencerId);
         return campaigns.map(campaign => ({
             title: campaign.campaign_name,
             brand_id: campaign.brand_id,

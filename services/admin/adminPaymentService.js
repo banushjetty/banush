@@ -80,9 +80,21 @@ class adminPaymentService {
 
     static async updatePaymentStatus(id, status) {
         try {
-            const result = await CampaignPayments.findByIdAndUpdate(id, { status }, { new: true });
+            const result = await CampaignPayments.findByIdAndUpdate(id, { status }, { new: true })
+                .populate('brand_id', 'brandName')
+                .populate('influencer_id', 'fullName displayName');
             if (result) {
-                return { success: true, message: 'Payment status updated successfully' };
+                return {
+                    success: true,
+                    message: 'Payment status updated successfully',
+                    payment: {
+                        id: result._id,
+                        status: result.status,
+                        amount: result.amount,
+                        brand: result.brand_id?.brandName || '',
+                        influencer: result.influencer_id?.displayName || result.influencer_id?.fullName || ''
+                    }
+                };
             } else {
                 return { success: false, message: 'Payment not found' };
             }

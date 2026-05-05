@@ -43,6 +43,11 @@ const AdminSidebar = ({ isOpen, onClose }) => {
             path: '/admin/feedback_and_moderation',
             icon: 'fas fa-comments',
             label: 'Feedback & Moderation'
+        },
+        {
+            path: '/admin/sub-admin-activity',
+            icon: 'fas fa-clipboard-list',
+            label: 'Sub-Admin Activity'
         }
     ];
 

@@ -16,8 +16,13 @@ async function getJSON(key) {
   const client = getClient();
   if (!client) return null;
 
-  const value = await client.get(withPrefix(key));
-  if (!value) return null;
+  let value;
+  try {
+    value = await client.get(withPrefix(key));
+    if (!value) return null;
+  } catch (_) {
+    return null;
+  }
 
   try {
     return JSON.parse(value);
@@ -32,10 +37,14 @@ async function setJSON(key, data, ttlSeconds) {
 
   const payload = JSON.stringify(data);
   const fullKey = withPrefix(key);
-  if (ttlSeconds && Number(ttlSeconds) > 0) {
-    await client.set(fullKey, payload, 'EX', Number(ttlSeconds));
-  } else {
-    await client.set(fullKey, payload);
+  try {
+    if (ttlSeconds && Number(ttlSeconds) > 0) {
+      await client.set(fullKey, payload, 'EX', Number(ttlSeconds));
+    } else {
+      await client.set(fullKey, payload);
+    }
+  } catch (_) {
+    return false;
   }
   return true;
 }
@@ -49,10 +58,14 @@ async function delByPattern(pattern) {
   let deleted = 0;
 
   do {
-    const [nextCursor, keys] = await client.scan(cursor, 'MATCH', fullPattern, 'COUNT', 200);
-    cursor = nextCursor;
-    if (keys.length) {
-      deleted += await client.del(...keys);
+    try {
+      const [nextCursor, keys] = await client.scan(cursor, 'MATCH', fullPattern, 'COUNT', 200);
+      cursor = nextCursor;
+      if (keys.length) {
+        deleted += await client.del(...keys);
+      }
+    } catch (_) {
+      return deleted;
     }
   } while (cursor !== '0');
 

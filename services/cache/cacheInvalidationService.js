@@ -2,29 +2,36 @@
 
 const cache = require('./redisCacheService');
 
+async function delPatterns(patterns) {
+  const counts = await Promise.all(patterns.map((pattern) => cache.delByPattern(pattern)));
+  return counts.reduce((sum, count) => sum + count, 0);
+}
+
 async function invalidateDashboardCaches() {
-  return cache.delByPattern('dashboard:*');
+  return delPatterns(['*:dashboard:*', 'dashboard:*']);
 }
 
 async function invalidateExploreCaches() {
-  return cache.delByPattern('explore:*');
+  return delPatterns(['*:explore:*', 'explore:*']);
 }
 
 async function invalidateRankingsCaches() {
-  return cache.delByPattern('rankings:*');
+  return delPatterns(['*:rankings:*', 'rankings:*']);
 }
 
 async function invalidateSearchCaches() {
-  return cache.delByPattern('search:*');
+  return delPatterns(['*:search:*', 'search:*']);
 }
 
 async function invalidateStatsCaches() {
-  const targets = await Promise.all([
-    cache.delByPattern('stats:*'),
-    cache.delByPattern('dashboard:*'),
-    cache.delByPattern('rankings:*'),
+  return delPatterns([
+    '*:stats:*',
+    '*:dashboard:*',
+    '*:rankings:*',
+    'stats:*',
+    'dashboard:*',
+    'rankings:*',
   ]);
-  return targets.reduce((sum, n) => sum + n, 0);
 }
 
 module.exports = {

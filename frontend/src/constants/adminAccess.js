@@ -21,4 +21,5 @@ export const PAGE_ACCESS = {
     '/admin/influencer-analytics': ['superadmin'],
     '/admin/product-analytics': ['superadmin'],
     '/admin/settings': ['superadmin'],
+    '/admin/sub-admin-activity': ['superadmin'],
 };

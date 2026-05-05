@@ -50,6 +50,12 @@ const DashboardController = {
             // Set JWT cookie
             res.cookie('adminToken', token, cookieOptions);
 
+            // Log the login activity
+            const { logSubAdminAction } = require('../../services/admin/adminSubAdminService');
+            // Temporarily attach user so logSubAdminAction can read it
+            req.user = { userId: user.userId, username: user.username, role: user.role };
+            await logSubAdminAction(req, 'LOGIN', `${user.username} logged in`);
+
             res.json({
                 success: true,
                 message: 'Login successful',

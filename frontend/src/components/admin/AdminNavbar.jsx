@@ -97,9 +97,9 @@ const AdminNavbar = ({ user, notifications = [], onMarkAllAsRead, children }) =>
                     <button
                         className={adminStyles.menuBtn}
                         onClick={() => setSidebarActive(!sidebarActive)}
-                        aria-label="Toggle sidebar"
+                        aria-label={sidebarActive ? 'Close sidebar' : 'Open sidebar'}
                     >
-                        ☰
+                        <i className={`fas ${sidebarActive ? 'fa-times' : 'fa-bars'}`} aria-hidden="true"></i>
                     </button>
                     <AdminSidebar
                         isOpen={sidebarActive}

@@ -32,6 +32,7 @@ import BrandList from './pages/admin/BrandList';
 import InfluencerList from './pages/admin/InfluencerList';
 import CustomerList from './pages/admin/CustomerList';
 import ProductAnalytics from './pages/admin/ProductAnalytics';
+import SubAdminActivity from './pages/admin/SubAdminActivity';
 import Login from './pages/admin/Login';
 import AllCampaigns from './pages/customer/AllCampaigns';
 import CampaignShopping from './pages/customer/CampaignShopping';
@@ -105,6 +106,7 @@ function App() {
                   <Route path="/admin/influencer-list" element={<AdminProtectedRoute><InfluencerList /></AdminProtectedRoute>} />
                   <Route path="/admin/customer-list" element={<AdminProtectedRoute><CustomerList /></AdminProtectedRoute>} />
                   <Route path="/admin/product-analytics" element={<AdminProtectedRoute><ProductAnalytics /></AdminProtectedRoute>} />
+                  <Route path="/admin/sub-admin-activity" element={<AdminProtectedRoute><SubAdminActivity /></AdminProtectedRoute>} />
 
                   {/* Brand Routes */}
                   <Route path="/brand/home" element={<ProtectedRoute requiredRole="brand"><BrandDashboard /></ProtectedRoute>} />
