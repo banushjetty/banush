@@ -7,12 +7,14 @@ module.exports = {
     '<rootDir>/.antigravity',
     '<rootDir>/.cursor',
     '<rootDir>/.vscode',
+    '<rootDir>/frontend',
     'C:/Users/chara/Desktop/smart-weather-dashboard-project'
   ],
 
   // Also ignore them for test discovery
   testPathIgnorePatterns: [
     '/node_modules/',
+    '/frontend/',
     'full-suite.test.js',
     '\\.antigravity',
     '\\.cursor',
