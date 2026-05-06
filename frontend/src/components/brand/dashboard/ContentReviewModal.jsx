@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const ContentReviewModal = ({ modalRef, modalInstanceRef, isOpen, campaignName, content, loading, onClose, onReview }) => {
+const ContentReviewModal = ({ modalRef, campaignName, content, loading, onClose, onReview }) => {
   // Separate submitted and approved content
   const submittedContent = content?.filter(c => c.status === 'submitted') || [];
   const approvedContent = content?.filter(c => c.status === 'approved' && c.status !== 'published') || [];

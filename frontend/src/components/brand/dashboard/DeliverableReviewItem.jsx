@@ -6,10 +6,6 @@ const DeliverableReviewItem = ({ deliverable, onReview, index }) => {
 
     const {
         task_description,
-        platform,
-        num_posts,
-        num_reels,
-        num_videos,
         status,
         content_url,
         submitted_at,

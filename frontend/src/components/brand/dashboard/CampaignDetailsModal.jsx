@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CampaignDetailsModal = ({ modalRef, modalInstanceRef, isOpen, details, loading, onClose }) => {
+const CampaignDetailsModal = ({ modalRef, details, loading, onClose }) => {
   return (
     <div className="modal fade" ref={modalRef} id="campaignDetailsModal" tabIndex="-1" aria-labelledby="campaignDetailsModalLabel" aria-hidden="true">
       <div className="modal-dialog modal-lg">

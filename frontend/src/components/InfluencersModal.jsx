@@ -10,7 +10,7 @@ const InfluencersModal = ({ isOpen, onClose }) => {
         if (isOpen) {
             fetchInfluencers();
         }
-    }, [isOpen]);
+    }, [isOpen, fetchInfluencers]);
 
     const filteredInfluencers = influencers.filter(influencer =>
         influencer.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
