@@ -72,10 +72,10 @@ const swaggerDocs = swaggerJsdoc(swaggerOptions);
 
 
 // CORS configuration
-// CORS configuration
 const allowedOrigins = [
     'http://localhost:5173',
     'http://localhost:3000',
+    'https://banush-5rpy.vercel.app',
     ...(process.env.Allowed_Origins ? process.env.Allowed_Origins.split(',') : []),
     ...(process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',') : [])
 ];
