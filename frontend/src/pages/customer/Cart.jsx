@@ -4,7 +4,7 @@ import styles from '../../styles/customer/cart.module.css';
 import { API_BASE_URL } from '../../services/api';
 import { useExternalAssets } from '../../hooks/useExternalAssets';
 import { useCart } from '../../contexts/CartContext';
-import CustomerNavbar from '../../components/customer/CustomerNavbar';
+//import CustomerNavbar from '../../components/customer/CustomerNavbar';
 
 const EXTERNAL_ASSETS = {
     styles: [
