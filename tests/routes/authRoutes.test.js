@@ -12,9 +12,9 @@ describe('Auth Routes Integration', () => {
                 password: 'password123'
             };
 
-            // const res = await request(app)
-            //     .post('/auth/customer/signup')
-            //     .send(signupData);
+            const res = await request(app)
+                .post('/auth/customer/signup')
+                .send(signupData);
 
             expect(res.status).toBe(201);
             expect(res.body.message).toContain('Signup successful');

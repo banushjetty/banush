@@ -11,7 +11,7 @@ const waitForActivityCountToIncrease = async (filter, previousCount) => {
         await new Promise(resolve => setTimeout(resolve, 25));
     }
 
-    // return AdminActivityLog.countDocuments(filter);
+    return AdminActivityLog.countDocuments(filter);
 };
 
 describe('Admin Routes Integration', () => {
