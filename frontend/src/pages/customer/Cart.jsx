@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from '../../styles/customer/cart.module.css';
 import { API_BASE_URL } from '../../services/api';
-//import { useExternalAssets } from '../../hooks/useExternalAssets';
+import { useExternalAssets } from '../../hooks/useExternalAssets';
 import { useCart } from '../../contexts/CartContext';
 import CustomerNavbar from '../../components/customer/CustomerNavbar';
 
