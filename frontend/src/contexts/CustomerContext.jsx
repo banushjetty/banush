@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import { API_BASE_URL } from '../services/api';
+//import { API_BASE_URL } from '../services/api';
 
 const CustomerContext = createContext();
 
