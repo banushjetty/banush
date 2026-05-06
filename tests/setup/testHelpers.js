@@ -5,6 +5,8 @@ const { Customer } = require('../../models/CustomerMongo');
 const { CampaignInfo } = require('../../models/CampaignMongo');
 const { SubscriptionPlan } = require('../../models/SubscriptionMongo');
 const { Admin } = require('../../mongoDB');
+const { Product } = require('../../models/ProductMongo');
+const { Order } = require('../../models/OrderMongo');
 
 const getObjectId = () => new mongoose.Types.ObjectId();
 
@@ -149,6 +151,48 @@ const createTestInfluencerAnalytics = async (influencerId, overrides = {}) => {
     return await analytics.save();
 };
 
+const createTestProduct = async (brandId, campaignId, overrides = {}) => {
+    const product = new Product({
+        brand_id: brandId,
+        campaign_id: campaignId,
+        name: 'Test Product',
+        description: 'Test product description',
+        original_price: 100,
+        campaign_price: 80,
+        category: 'Electronics',
+        target_quantity: 100,
+        created_by: brandId,
+        ...overrides
+    });
+    return await product.save();
+};
+
+const createTestOrder = async (customerId, productId, overrides = {}) => {
+    const order = new Order({
+        customer_id: customerId,
+        items: [{
+            product_id: productId,
+            quantity: 1,
+            price_at_purchase: 80,
+            subtotal: 80
+        }],
+        total_amount: 80,
+        shipping_cost: 0,
+        status: 'pending',
+        shipping_address: {
+            name: 'Test Customer',
+            address_line1: '123 Test St',
+            city: 'Testville',
+            state: 'TS',
+            zip_code: '12345',
+            country: 'Testland'
+        },
+        ...overrides
+    });
+    return await order.save();
+};
+
+
 module.exports = {
     getObjectId,
     createTestBrand,
@@ -160,6 +204,8 @@ module.exports = {
     createTestPayment,
     createTestCampaignInfluencer,
     createTestInfluencerAnalytics,
-    createTestAdmin
+    createTestAdmin,
+    createTestProduct,
+    createTestOrder
 };
 
